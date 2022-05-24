@@ -1,0 +1,6 @@
+com\mycompany\ownProjectName\JakartaRestConfiguration.class
+com\mycompany\ownProjectName\resources\JakartaEE8Resource.class
+view\backing\TableBean.class
+view\backing\FormBean.class
+view\backing\ChartBean.class
+view\backing\Student.class
