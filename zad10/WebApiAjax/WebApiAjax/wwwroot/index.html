@@ -1,0 +1,71 @@
+﻿﻿
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <div>
+        <h1>Calculations</h1>
+        <form>
+            x = <input type="text" id="x" />
+            y = <input type="text" id="y" />
+            <input type="button" id="calc" value="Call API (jQuery)" />
+            <input type="button" id="calc2" value="Call API (vanilla JS)" onclick="process()" />
+        </form>
+        x + y = <span id="sum"></span><br />
+        x - y = <span id="difference"></span><br />
+        x * y = <span id="product"></span><br />
+        x / y = <span id="quotient"></span><br />
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            $("#calc").click(function ()
+            {
+                var x = $('#x').val();
+                var y = $('#y').val();
+                $.ajax(
+                    {
+                        type: "GET",
+                        data: { x, y },
+                        url: '/math',
+                        success: response =>
+                        {
+                            document.getElementById("sum").textContent = response.sum;
+                            document.getElementById("difference").textContent = response.difference;
+                            document.getElementById("product").textContent = response.product;
+                            document.getElementById("quotient").textContent = response.quotient;
+                        }
+                    });
+            });
+        });
+
+        function process()
+        {
+            const x = document.getElementById("x").value;
+            const y = document.getElementById("y").value;
+
+            const request = new XMLHttpRequest();
+
+            request.open("GET", `/math?x=${x}&y=${y}`);
+            request.responseType = 'json';
+            request.send();
+
+            request.onload = function ()
+            {
+                document.getElementById("sum").textContent = request.response.sum;
+                document.getElementById("difference").textContent = request.response.difference;
+                document.getElementById("product").textContent = request.response.product;
+                document.getElementById("quotient").textContent = request.response.quotient;
+            }
+        }
+
+    </script>
+</body>
+</html>
